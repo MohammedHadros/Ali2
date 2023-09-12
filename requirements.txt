@@ -25,3 +25,8 @@ tomlkit==0.12.1
 typing_extensions==4.5.0
 tzdata==2022.7
 wrapt==1.15.0
+
+
+
+# run this command for notification 
+#  docker run -p 6379:6379 -d redis:5
