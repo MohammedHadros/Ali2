@@ -759,8 +759,29 @@ def request_details(request, slug, requestId):
     print('555555555')
     print('-------------*-----------*')
     print(requestId)
+    # if instance.status=='pending':
+    #     messagea=" طلبك قيد التنفيذ الخاص بالفندق"    + instance.hotel.hotel_name
+    # elif instance.status=='accepted':
+    #     messagea=" لقد تم قبول طلبك الخاص بالفندق "+ instance.hotel.hotel_name
+    # elif instance.status=='rejected':
+    #     messagea=" لقد تم رفض طلبك الخاص بالفندق "+ instance.hotel.hotel_name
+    # else:
+    #     messagea=" راقب طلباتك " + instance.hotel.hotel_name
+    
+    # notification=BroadcastNotification2(message=messagea ,broadcast_on=datetime.now(), request=instance,reciver=instance.customer.user )
+    # notification.save()
+    # room_name=instance.customer.user.get_username()
+    # chanel='notification_'+room_name
+    # channel_layer=get_channel_layer()
+    # async_to_sync(channel_layer.group_send)(
+    # chanel,{
+    #     'type':'send_notification',
+    #     'message':messagea
+    # }
+    # )
     if request.method == 'POST':
         form = RequestForm(request.POST, instance=instance)
+
         if form.is_valid():
             print('-------123123------*-----123123------*')
             request=form.save()
