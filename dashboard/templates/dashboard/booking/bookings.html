@@ -1,0 +1,277 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+{% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block content %}
+
+<div class="nk-content ">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <!-- messages  -->
+
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+
+            <!-- end message -->
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">قائمة الحجوزات</h3>
+                            <div class="nk-block-des text-soft">
+                                <p>إجمالي عدد الحجوزات {{hotel.booking_set.count}} حجز.</p>
+                            </div>
+                        </div><!-- .nk-block-head-content -->
+                        <div class="nk-block-head-content">
+                            <div class="toggle-wrap nk-block-tools-toggle">
+                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                    data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                <div class="toggle-expand-content" data-content="pageMenu">
+                                    <ul class="nk-block-tools g-3">
+                                        <li class="nk-block-tools-opt">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-primary"
+                                                    data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="{% url 'booking-add' hotel.slug %}"><span>إضافة
+                                                                    حجز</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- .toggle-wrap -->
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    <div class="card card-bordered card-stretch">
+                        <div class="card-inner-group">
+                            <div class="card-inner p-0">
+
+                                <div class="nk-tb-list nk-tb-ulist">
+                                    <div class="nk-tb-item nk-tb-head">
+                                        <div class="nk-tb-col nk-tb-col-check">
+                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                <input type="checkbox" class="custom-control-input" id="uid">
+                                                <label class="custom-control-label" for="uid"></label>
+                                            </div>
+                                        </div>
+                                        <div class="nk-tb-col"><span class="sub-text">ID</span></div>
+                                        <div class="nk-tb-col"><span class="sub-text">العميل</span></div>
+                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">الباقة</span></div>
+                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">الحجز</span></div>
+                                        <!-- <div class="nk-tb-col tb-col-lg"><span class="sub-text">نوع الغرفة</span></div> -->
+                                        <div class="nk-tb-col tb-col-xxl"><span class="sub-text">الهاتف</span></div>
+                                        <div class="nk-tb-col tb-col-lg"><span class="sub-text">وقت الوصول</span></div>
+                                        <div class="nk-tb-col tb-col-xxl"><span class="sub-text">المغادرة</span></div>
+                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">الدفع</span></div>
+                                        <div class="nk-tb-col nk-tb-col-tools text-end">
+                                            <div class="dropdown">
+                                                <a href="#"
+                                                    class="btn btn-xs btn-outline-light btn-icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" data-offset="0,5"><em
+                                                        class="icon ni ni-plus"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
+                                                    <ul class="link-tidy sm no-bdr">
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    checked="" id="bo">
+                                                                <label class="custom-control-label"
+                                                                    for="bo">Booking</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    checked="" id="ph">
+                                                                <label class="custom-control-label"
+                                                                    for="ph">Phone</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div
+                                                                class="custom-control custom-control-sm custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="pay">
+                                                                <label class="custom-control-label"
+                                                                    for="pay">Payment</label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-tb-item -->
+                                    <div class="nk-block-between">
+
+                                    {% if hotel.booking_set.count == 0%}
+                                    <div class="nk-tb-item">
+                                        <div class="nk-tb-col nk-tb-col-check">
+                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                <input type="checkbox" class="custom-control-input" id="uid1">
+                                                <label class="custom-control-label" for="uid1"></label>
+                                            </div>
+                                        </div>
+                                        <div class="nk-tb-col">
+                                            <span class="text-primary">لا يوجد حجوزات</span>
+                                        </div>
+                                        {% else %}
+                                    </div><!-- .nk-tb-item -->
+                                    <!-- bookings Loop -->
+                                    {% for booking in hotel.booking_set.all %}
+
+                                    <div class="nk-tb-item">
+                                        <!-- check -->
+                                        <div class="nk-tb-col nk-tb-col-check">
+                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{ booking.id}}">
+                                                <label class="custom-control-label" for="{{booking.id }}"></label>
+                                            </div>
+                                        </div>
+
+                                        <!-- ID -->
+                                        <div class="nk-tb-col">
+                                            <span class="text-primary">{{booking.customer.id}}</span>
+                                        </div>
+                                        <!-- Client -->
+                                        <div class="nk-tb-col">
+                                            <div class="user-card">
+
+                                                <div class="user-info">
+                                                    <span class="tb-lead">{{ booking.customer.first_name}}<span
+                                                            class="dot dot-warning d-md-none ms-1"></span></span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Package -->
+                                        <div class="nk-tb-col tb-col-mb">
+                                            <span class="tb-lead">{{ booking.package }} </span>
+                                        </div>
+                                        <!-- status -->
+                                        <div class="nk-tb-col tb-col-mb">
+                                            <span
+                                                class="tb-status text-{% if booking.status == 'processed' %}success{% else %}warning{% endif %}">{{
+                                                booking.get_status_display}}</span>
+                                        </div>
+                                        <!-- Room Type -->
+                                        <!-- <div class="nk-tb-col tb-col-lg">
+                                                            <span>{{ booking.roomType }}</span>
+                                                        </div> -->
+                                        <!-- Phone  -->
+                                        <div class="nk-tb-col tb-col-xxl">
+                                            <span>{{ booking.customer.phone}}</span>
+                                        </div>
+                                        <!-- start date -->
+                                        <div class="nk-tb-col tb-col-lg">
+                                            <span>{{booking.start_date}}</span>
+                                        </div>
+                                        <!-- End date -->
+                                        <div class="nk-tb-col tb-col-xxl">
+                                            <span>{{booking.end_date}}</span>
+                                        </div>
+
+                                        <!-- Payment -->
+                                        <div class="nk-tb-col tb-col-md">
+                                            <span class="tb-status text-warning">Due</span>
+                                        </div>
+
+                                        <div class="nk-tb-col tb-col-md">
+                                            <span><a href="{% url 'booking-edit' hotel.slug booking.id%}"><em
+                                                        class="icon ni ni-eye"></em><span>معاينة</span></a></span>
+
+                                        </div>
+
+                                        <!-- tools -->
+
+                                    </div>
+                                    {%endfor%}
+                                    </div>
+                                    {% endif %}
+                                    <!-- <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input" id="uid10">
+                                                                <label class="custom-control-label" for="uid10"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="text-primary">AB-605</span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <a href="#">
+                                                                <div class="user-card">
+                                                                    <div class="user-avatar bg-danger">
+                                                                        <span>MY</span>
+                                                                    </div>
+                                                                    <div class="user-info">
+                                                                        <span class="tb-lead">Makiyah Yeager<span class="dot dot-success d-md-none ms-1"></span></span>
+                                                                        <span>makiyah@niosoft.com</span>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                            <span>Honeymoon</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span class="tb-status text-success">Active</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <span>Delux</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-xxl">
+                                                            <span>+811 569-6523</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <span>02 May 2021</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-xxl">
+                                                            <span>04 May 2021</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span class="tb-status text-success">Paid</span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <ul class="nk-tb-actions gx-1">
+                                                                <li>
+                                                                    <div class="drodown">
+                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li><a href="#"><em class="icon ni ni-mail-fill"></em><span>Send Email</span></a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-edit-fill"></em><span>Edit</span></a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div> -->
+                                </div><!-- .nk-tb-list -->
+                                </div>
+                            <!-- .card-inner -->
+                        </div><!-- .card-inner-group -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

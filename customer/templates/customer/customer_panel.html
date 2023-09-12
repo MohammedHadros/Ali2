@@ -1,0 +1,180 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block sidbar %}
+{% include 'customer/customer_sidebar.html' %}
+{% endblock %}
+
+<!-- Nav settings  -->
+{% block navSettings %}
+<li class="dropdown user-dropdown">
+    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+        <div class="user-toggle">
+            <div class="user-avatar sm">
+                <em class="icon ni ni-user-alt"></em>
+            </div>
+            <div class="user-info d-none d-md-block">
+                <div class="user-status">الاعدادات</div>
+                <div class="user-name dropdown-indicator">{{ request.user.first_name }}</div>
+            </div>
+        </div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+            <div class="user-card">
+                <div class="user-avatar">
+                    <span>AB</span>
+                </div>
+                <div class="user-info">
+                    <span class="lead-text">{{ request.user.first_name }}</span>
+                    <span class="sub-text">{{ request.user.email }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li><a href="{% url 'customer-panel-profile' %}"><em class="icon ni ni-user-alt"></em><span>الملف
+                            الشخصي</span></a>
+                </li>
+
+                <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+            </ul>
+        </div>
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li><a href="{% url 'main:logout' %}"><em class="icon ni ni-signout"></em><span>تسجيل الخروج</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</li>
+{% endblock navSettings %}
+{% block notification %}
+                <li class="dropdown   notification-dropdown me-n1" >
+                    <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                        <div class="icon-status icon-status-info" id="navbarDropdownIconNotificationsCustomer"><em class="icon ni ni-bell"></em>
+                            <span class="badge" id="notification-badge" 
+                            style="position: absolute;
+                                    border: 0;
+                                    top: -13px;
+                                    right: -13px;
+                                    color: black;
+                                    background-color: #1d8ff28c;
+                                    border-radius: 50%;
+                                    font-weight: bold;">0</span>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
+                        <div class="dropdown-head">
+                            <span class="sub-title nk-dropdown-title">الإشعارات</span>
+                            <a href="#">وضع علامة مقروء</a>
+                        </div>
+                        
+                        <div class="dropdown-body">
+                            <div class="nk-notification" id="notifications-dropdown">
+                   
+                                <div  class="nk-notification-item dropdown-inner">
+                                    <div class="nk-notification-icon">
+                                        <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
+                                    </div>
+                                    
+                                    <!-- <div class="nk-notification-content">
+                                        <div class="nk-notification-text">{{ notification.message }}
+                                            <span>{{ notification.recipient.first_name}}</span></div>
+                                        <div class="nk-notification-time">{{notification.time|timesince}}</div>
+                                    </div> -->
+                                </div>
+                            
+                                
+                                {#                                                    <div class="nk-notification-item dropdown-inner">#}
+                                {#                                                        <div class="nk-notification-icon">#}
+                                {#                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>#}
+                                {#                                                        </div>#}
+                                {#                                                        <div class="nk-notification-content">#}
+                                {#                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>#}
+                                {#                                                            <div class="nk-notification-time">2 hrs ago</div>#}
+                                {#                                                        </div>#}
+                                {#                                                    </div>#}
+                                {#                                                    <div class="nk-notification-item dropdown-inner">#}
+                                {#                                                        <div class="nk-notification-icon">#}
+                                {#                                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>#}
+                                {#                                                        </div>#}
+                                {#                                                        <div class="nk-notification-content">#}
+                                {#                                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>#}
+                                {#                                                            <div class="nk-notification-time">2 hrs ago</div>#}
+                                {#                                                        </div>#}
+                                {#                                                    </div>#}
+                                {#                                                    <div class="nk-notification-item dropdown-inner">#}
+                                {#                                                        <div class="nk-notification-icon">#}
+                                {#                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>#}
+                                {#                                                        </div>#}
+                                {#                                                        <div class="nk-notification-content">#}
+                                {#                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>#}
+                                {#                                                            <div class="nk-notification-time">2 hrs ago</div>#}
+                                {#                                                        </div>#}
+                                {#                                                    </div>#}
+                            </div><!-- .nk-notification -->
+                        </div><!-- .nk-dropdown-body -->
+                        <div class="dropdown-foot center">
+                            <a href="#">View All</a>
+                        </div>
+                    </div>
+                </li>
+                {% endblock notification %}
+
+{% block page_title %}لوحة المستخدم {% endblock %}
+{% block content %}
+
+<!--Customer Detail-->
+<div class="card p-4 " style="background-color: white; border-radius: 25px;">
+    <div class="row CusotmerDetails mx-0">
+        <div class="d-flex justify-content-center align-items-center">
+            <img src="
+            {% static 'images/CustomerImages/ProfileImg.jpg' %}" alt="ProfileImage" style="border-radius: 50%;"
+                width="100" height="100" class="mb-4">
+        </div>
+        <div class=" col-6 ">
+            <div class="BlueCard d-flex justify-content-between align-items-center flex-column">
+            <img src=" {% static 'images/CustomerImages/User.svg' %}" alt="FirstName" width="35" style="margin-bottom: 20px;">
+            <p class="textDark text-center">الأسم
+                الكامل
+                <br>
+                <span class="NormalText">علي علي</span>
+            </p>
+        </div>
+        </div>
+
+        <div class="col-6">
+            <div class="BlueCard d-flex justify-content-between align-items-center flex-column">
+            <img src=" {% static 'images/CustomerImages/Email.svg' %}" alt="EmailAddress" width="35" style="margin-bottom: 20px;">
+            <p class="textDark text-center">البريد الألكتروني
+                <br>
+                <span class="NormalText">example@gmail.com </span>
+            </p>
+        </div>
+        </div>
+        <div class="col-6">
+            <div class="BlueCard d-flex justify-content-between align-items-center flex-column mt-4">
+            <img src=" {% static 'images/CustomerImages/phone.svg' %}" alt="Phone" width="35" style="margin-bottom: 20px;">
+            <p class="textDark text-center">رقم الهاتف
+                <br>
+                <span class="NormalText"> +917 23 823 8128 38</span>
+            </p>
+        </div>
+        </div>
+        <div class="col-6 ">
+            <div class="BlueCard d-flex justify-content-between align-items-center flex-column mt-4">
+            <img src=" {% static 'images/CustomerImages/Location.svg' %}" alt="Phone" width="35" style="margin-bottom: 20px;">
+            <p class="textDark text-center">العنوان
+                <br>
+                <span class="NormalText">مكة المكرّمة </span>
+            </p>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- content @e -->
+{% endblock %}
+

@@ -1,0 +1,275 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block content %}
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">قائمة المنصرفات</h3>
+                                            <div class="nk-block-des text-soft">
+                                                <p>هنا قائمة بمختلف المنصرفات.</p>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                        <div class="nk-block-head-content">
+                                            <ul class="nk-block-tools g-3">
+                                                <li>
+                                                    <div class="drodown">
+                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <ul class="link-list-opt no-bdr">
+                                                                <li><a data-bs-toggle="modal" href="#add-expense-modal"><span>اضافة منصرف</span></a></li>
+                                                                <li><a href="#"><span>استيراد منصرفات</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div><!-- .nk-block-head-content -->
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+                                <div class="nk-block">
+                                    <div class="card card-bordered card-stretch">
+                                        <div class="card-inner-group">
+                                            
+                                            <div class="card-inner p-0">
+                                                <div class="nk-tb-list nk-tb-ulist">
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input" id="uid">
+                                                                <label class="custom-control-label" for="uid"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col"><span class="sub-text">رقم المنصرف</span></div>
+                                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">اسم المورد</span></div>
+                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">البيان</span></div>
+                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">التاريخ</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">المبلغ</span></div>
+                                                        <div class="nk-tb-col nk-tb-col-tools text-end">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-xs btn-outline-light btn-icon dropdown-toggle" data-bs-toggle="dropdown" data-offset="0,5"><em class="icon ni ni-plus"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
+                                                                    <ul class="link-tidy sm no-bdr">
+                                                                        <li>
+                                                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" checked="" id="xyz">
+                                                                                <label class="custom-control-label" for="xyz">XYY Enter</label>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" checked="" id="easy">
+                                                                                <label class="custom-control-label" for="easy">Easy Fix</label>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% for expense, form in expense_forms %}
+                                                    <!-- .nk-tb-item -->
+                                                    <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input" id="{{expense.id}}">
+                                                                <label class="custom-control-label" for="{{expense.id}}"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <a href="#edit-expense-{{expense.id}}" data-bs-toggle="modal"><span class="text-primary">#{{expense.expense_number}}</span></a>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                            <span>{{expense.supplier_name}}</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span>{{expense.description}}</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span>{{expense.created}}</span>
+                                                        </div>
+                                                        <div class="nk-tb-col" data-order="1229.99">
+                                                            <span class="tb-amount">{{expense.amount}} <span class="currency">SAR</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <ul class="nk-tb-actions gx-1">
+                                                                <li>
+                                                                    <div class="drodown">
+                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li><a href="#edit-expense-{{expense.id}}" data-bs-toggle="modal"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item  -->
+                                                    
+                                                    <!-- Edit Moal -->
+                                                    <div class="modal fade" tabindex="-1" role="dialog" id="edit-expense-{{expense.id}}">
+
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                                                <div class="modal-body modal-body-md">
+                                                                    <h5 class="modal-title"> تعديل على منصرف</h5>
+                                                                    <form action="{% url 'report-expense-update' hotel.slug expense.id %}" method='post' class="mt-2">
+                                                                        {% csrf_token %}
+                                                                        <div class="row g-gs">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="supplier-name">اسم المزود</label>
+                                                                                    <input type="text" name="{{form.supplier_name.name}}" value="{{form.supplier_name.value}}" class="form-control" id="supplier-name" placeholder="اسم المزود">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="description">البيان</label>
+                                                                                    <input type="text"  class="form-control" id="description" placeholder="Description"
+                                                                                    name="{{form.description.name}}" value="{{form.description.value}}"
+                                                                                    >
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">التاريخ</label>
+                                                                                    <small>تاريخ الاضافة </small>
+                                                                                    <div class="form-control-wrap">
+                                                                                        <div class="form-icon form-icon-right">
+                                                                                            <em class="icon ni ni-calendar"></em>
+                                                                                        </div>
+                                                                                        <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                                                                                        name="{{form.created.name}}" value="{{expense.created}}" disabled
+                                                                                        >
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="amount">المبلغ</label>
+                                                                                    <input type="number" step="0.01" class="form-control" id="amount" placeholder="300.99 USD"
+                                                                                    name="{{form.amount.name}}" value="{{form.amount.value}}"
+                                                                                    >
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                                    <li>
+                                                                                        <button type="submit" class="btn btn-primary">تعديل منصرف</button>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div><!-- .modal-body -->
+                                                            </div><!-- .modal-content -->
+                                                        </div><!-- .modal-dialog -->
+                                                    </div><!-- .modal -->
+                                                    {% endfor %}
+                                                </div><!-- .nk-tb-list -->
+                                            </div><!-- .card-inner -->
+
+                                            <!-- add Modal -->
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="add-expense-modal">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                                        <div class="modal-body modal-body-md">
+                                                            <h5 class="modal-title"> إضافة منصرف </h5>
+                                                            <form action="{% url 'report-expenses' hotel.slug %}" method='post' class="mt-2">
+                                                                {% csrf_token %}
+                                                                <div class="row g-gs">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="supplier-name">اسم المزود</label>
+                                                                            <input type="text" name="{{form.supplier_name.name}}"  class="form-control" id="supplier-name" placeholder="اسم المزود">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="description">البيان</label>
+                                                                            <input type="text"  class="form-control" id="description" placeholder="Description"
+                                                                            name="{{form.description.name}}" 
+                                                                            >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">التاريخ</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <div class="form-icon form-icon-right">
+                                                                                    <em class="icon ni ni-calendar"></em>
+                                                                                </div>
+                                                                                <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                                                                                name="{{form.created.name}}" 
+                                                                                >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="amount">المبلغ</label>
+                                                                            <input type="number" class="form-control" id="amount" placeholder="300.99 USD"
+                                                                            name="{{form.amount.name}}" 
+                                                                            >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                            <li>
+                                                                                <button type="submit" class="btn btn-primary">اضافة منصرف</button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div><!-- .modal-body -->
+                                                    </div><!-- .modal-content -->
+                                                </div><!-- .modal-dialog -->
+                                            </div><!-- .modal -->
+
+
+                                            <!-- Paginations -->
+                                            {% include 'dashboard/components/paginator.html' with page_obj=expenses %}
+
+                                        </div><!-- .card-inner-group -->
+                                    </div><!-- .card -->
+                                </div><!-- .nk-block -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                {% endblock %}

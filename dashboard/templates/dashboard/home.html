@@ -1,0 +1,663 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block sidbar %}
+
+{% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block page_title %}لوحة المعلومات{% endblock %}
+{% block content %}
+<div class="nk-block">
+    <div class="row g-gs">
+        <div class="col-md-4">
+            <div class="card card-bordered card-full">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-0">
+                        <div class="card-title">
+                            <h6 class="title">الطلبات</h6>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left"
+                                title="Total Booking"></em>
+                        </div>
+                    </div>
+                    <div id="loading-spinner" class="spinner-border text-primary loading-spinner" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="card-amount" id="cardRequestCount" style="display: none;">
+                        <span class="amount" id="totalRequestCount"> 0 </span>
+                        <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>0</span>
+                    </div>
+                    
+                    <div class="invest-data">
+                        <div class="invest-data-amount g-2">
+                            <div class="invest-data-history">
+                                <div class="title">هذا الشهر</div>
+                                <div class="amount" id="totalRequestCountMonth">0</div>
+                            </div>
+                            <div class="invest-data-history">
+                                <div class="title">هذا الأسبوع</div>
+                                <div class="amount" id="totalRequestCountWeek">0</div>
+                            </div>
+                        </div>
+                        <div class="invest-data-ck">
+                            <canvas class="iv-data-chart" id="totalBooking"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+        <!-- Rooms -->
+        <div class="col-md-4">
+            <div class="card card-bordered card-full">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-0">
+                        <div class="card-title">
+                            <h6 class="title">الغرف</h6>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left"
+                                title="Total Room"></em>
+                        </div>
+                    </div>
+                    <div id="loading-spinner" class="spinner-border text-primary loading-spinner" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="card-amount" id="cardRooms" style="display: none;">
+                        <span class="amount" id="totalRooms"> 0 </span>
+                    </div>
+                    <div class="invest-data">
+                        <div class="invest-data-amount g-2">
+                            <div class="invest-data-history">
+                                <div class="title">حُجزت (هذا الشهر)</div>
+                                <div class="amount" id="totalRoomBookedMonth">0</div>
+                            </div>
+                            <div class="invest-data-history">
+                                <div class="title">حُجزت (هذا الأسبوع)</div>
+                                <div class="amount" id="totalRoomBookedWeek">0</div>
+                            </div>
+                        </div>
+                        <div class="invest-data-ck">
+                            <canvas class="iv-data-chart" id="totalRoom"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+       <!-- Expneses -->
+        <div class="col-md-4">
+            <div class="card card-bordered  card-full">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-0">
+                        <div class="card-title">
+                            <h6 class="title">المصروفات</h6>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left"
+                                title="Total Expenses"></em>
+                        </div>
+                    </div>
+                    <!-- spinner -->
+                    <div id="loading-spinner" class="spinner-border text-primary loading-spinner" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <div class="card-amount" id="cardExpenses" style="display: none;">
+                        <span class="amount" id="totalExpensesAmount"> 0 <span class="currency currency-usd">SAR</span>
+                        </span>
+                    </div>
+                    <div class="invest-data">
+                        <div class="invest-data-amount g-2">
+                            <div class="invest-data-history">
+                                <div class="title" id="totalExpensesMonth">هذا الشهر</div>
+                                <div class="amount">0 <span class="currency currency-usd">SAR</span></div>
+                            </div>
+                            <div class="invest-data-history">
+                                <div class="title">هذا الأسبوع</div>
+                                <div class="amount" id="totalExpensesWeek">0 <span class="currency currency-usd">SAR</span></div>
+                            </div>
+                        </div>
+                        <div class="invest-data-ck">
+                            <canvas class="iv-data-chart" id="totalExpenses"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+
+        <!-- Packges & Progress bar -->
+        <div class="col-md-6 col-xxl-5">
+            <div class="card card-bordered card-full">
+                <div class="card-inner d-flex flex-column h-100">
+                    <div class="card-title-group mb-3">
+                        <div class="card-title me-1">
+                            <h6 class="title">أفضل الباقات التي تم حجزها</h6>
+                            <p>أفضل الباقات التي تم حجزها خلال هذا العام</p>
+                        </div>
+                        <div class="card-tools mt-n1 me-n1">
+                            <div class="drodown">
+                                <a href="#"
+                                    class="dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white"
+                                    data-bs-toggle="dropdown">30 يوم</a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                    <ul class="link-list-opt no-bdr">
+                                        <li><a href="#"><span>7 أيام</span></a></li>
+                                        <li><a href="#"><span>15 يوم</span></a></li>
+                                        <li><a href="#"><span>30 يوم</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-list gy-3">
+                        {% for season in seasons %}
+                        <div class="progress-wrap">
+                            <div class="progress-text">
+                                <div class="progress-label">{{ season.season }}</div>
+                                <div class="progress-amount" id="progress-amount-{{season.id}}">0%</div>
+                            </div>
+                            <div class="progress progress-md">
+                                <div class="progress-bar" id="progress-bar-{{season.id}}" data-progress="0"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        
+                    </div>  
+                </div>
+            </div>
+        </div><!-- .col -->
+
+        <!-- Steps to Activate Hotel -->
+        <div class="col-md-6 col-xxl-3">
+            <div class="card card-bordered">
+                <div class="card-inner border-bottom">
+                    <div class="card-title-group">
+                        <div class="card-title">
+                            <h6 class="title">خطوات تفعيل الفندق</h6>
+                        </div>
+                        <div class="card-tools">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-inner">
+                    <div class="timeline">
+                        <h6 class="timeline-head">March, 2023</h6>
+                        <ul class="timeline-list">
+                            <li class="timeline-item">
+                                <div class="timeline-status bg-success is-outline"></div>
+                                <div class="timeline-date">تم <em class="icon ni ni-check-circle text-success"></em>
+                                </div>
+                                <div class="timeline-data">
+                                    <h6 class="timeline-title">إنشاء الفندق</h6>
+                                    <div class="timeline-des">
+                                        <p></p>
+                                        {# <span class="time">09:30am</span>#}
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Images & Location -->
+                            <li class="timeline-item" id="imageAndLocation">
+                                    <div class="timeline-status bg-warning"></div>
+                                    <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
+                                </div>
+                                <div class="timeline-data">
+                                    <h6 class="timeline-title">إضافة الموقع الجغرافي والصور</h6>
+                                    <div class="timeline-des">
+                                        <p></p>
+                                        {# <span class="time">09:30am</span>#}
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Rooms -->
+                            <li class="timeline-item" id="rooms">
+                                <div class="timeline-status bg-warning"></div>
+                                <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
+                                </div>
+                                <div class="timeline-data">
+                                    <h6 class="timeline-title">إضافة الغرف</h6>
+                                    <div class="timeline-des">
+                                        <p>تتم إضافة الغرف بعد إضافة أنواع الغرف</p>
+                                        {# <span class="time">09:30am</span>#}
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Activate -->
+                            <li class="timeline-item" id="hotelStatus">
+                                <div class="timeline-status bg-warning"></div>
+                                <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
+                                </div>
+                                <div class="timeline-data">
+                                    <h6 class="timeline-title">إطلاق الفندق 
+                                        {% if hotel.is_active %}
+                                                <a href="{% url 'change_status' hotel.id%}">
+                                                    <span class="badge bg-success m-0"
+                                                          style="font-family: DIN, serif">نشط</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'change_status' hotel.id%}">
+                                                    <span class="badge bg-danger m-0"
+                                                          style="font-family: DIN, serif">معطل</span>
+                                                </a>
+                                            {% endif %}
+                                    </h6>
+                                    <div class="timeline-des">
+                                        <p>يجب تفعيل الفندق للتتمكن من استقبال طلبات الحجوزات</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- .card -->
+
+        </div>
+        <!-- Income  -->
+        <div class="col-md-6 col-xxl-5">
+            <div class="card card-bordered h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start pb-3 g-2">
+                        <div class="card-title">
+                            <h6 class="title">ايرادات المبيعات</h6>
+                            <p>إيرادات الإيجار في آخر 30 يومًا.</p>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-help" data-bs-toggle="tooltip" data-bs-placement="left"
+                                title="Revenue of this month"></em>
+                        </div>
+                    </div>
+                    <div class="analytic-au">
+                        <div class="analytic-data-group analytic-au-group g-3">
+                            <div class="analytic-data analytic-au-data">
+                                <div class="title">شهرياً</div>
+                                <div class="amount">0K</div>
+                                <div class="change up"><em class="icon ni ni-arrow-long-up"></em>0%
+                                </div>
+                            </div>
+                            <div class="analytic-data analytic-au-data">
+                                <div class="title">أسبوعياً</div>
+                                <div class="amount">0K</div>
+                                <div class="change down"><em class="icon ni ni-arrow-long-down"></em>0%
+                                </div>
+                            </div>
+                            <div class="analytic-data analytic-au-data">
+                                <div class="title">يومياً (متوسط)</div>
+                                <div class="amount">0K</div>
+                                <div class="change up"><em class="icon ni ni-arrow-long-up"></em>0%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analytic-au-ck">
+                            <canvas class="analytics-au-chart" id="analyticAuData"></canvas>
+                        </div>
+                        <div class="chart-label-group">
+                            <div class="chart-label">01 Jan, 2023</div>
+                            <div class="chart-label">30 Jan, 2023</div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+
+        <!-- Rooms Booked  -->
+        <div class="col-md-6 col-xxl-3">
+            <div class="card card-bordered h-100">
+                <div class="card-inner">
+                    <div class="card-title-group">
+                        <div class="card-title">
+                            <h6 class="title">إحصائيات حجز الغرف</h6>
+                        </div>
+                        <div class="card-tools">
+                            <div class="drodown">
+                                <a href="#"
+                                    class="dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white"
+                                    data-bs-toggle="dropdown">30 يوماً</a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                    <ul class="link-list-opt no-bdr">
+                                        <li><a href="#"><span>7 أيام</span></a></li>
+                                        <li><a href="#"><span>15 يوماً</span></a></li>
+                                        <li><a href="#"><span>30 يوماً</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="traffic-channel">
+                        <div class="traffic-channel-doughnut-ck">
+                            <canvas class="analytics-doughnut" id="BookingData"></canvas>
+                        </div>
+                        <div class="traffic-channel-group g-2">
+                            <div class="traffic-channel-data">
+                                <div class="title"><span class="dot dot-lg sq"
+                                        data-bg="#9cabff"></span><span>Single</span>
+                                </div>
+                                <div class="amount">5 <small>5%</small></div>
+                            </div>
+                            <div class="traffic-channel-data">
+                                <div class="title"><span class="dot dot-lg sq"
+                                        data-bg="#1ee0ac"></span><span>Double</span>
+                                </div>
+                                <div class="amount">0 <small>0%</small></div>
+                            </div>
+                            <div class="traffic-channel-data">
+                                <div class="title"><span class="dot dot-lg sq"
+                                        data-bg="#f9db7b"></span><span>Delux</span>
+                                </div>
+                                <div class="amount">0 <small>0%</small></div>
+                            </div>
+                            <div class="traffic-channel-data">
+                                <div class="title"><span class="dot dot-lg sq"
+                                        data-bg="#ffa353"></span><span>Suit</span>
+                                </div>
+                                <div class="amount">0 <small>0%</small></div>
+                            </div>
+                        </div><!-- .traffic-channel-group -->
+                    </div><!-- .traffic-channel -->
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+        <!-- Income vs Expense -->
+        <div class="col-xxl-5">
+            <div class="card card-bordered h-100">
+                <div class="card-inner">
+                    <div class="card-title-group pb-3 g-2">
+                        <div class="card-title">
+                            <h6 class="title">الدخل مقابل المصروفات</h6>
+                            <p>كيف كان دخلك ومصروفاتك هذا الشهر.</p>
+                        </div>
+                        <div class="card-tools shrink-0 d-none d-sm-block">
+                            <ul class="nav nav-switch-s2 nav-tabs bg-white">
+                                <li class="nav-item"><a class="nav-link">7 D</a></li>
+                                <li class="nav-item"><a class="nav-link active">1 M</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link">3 M</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="analytic-ov">
+                        <div class="analytic-data-group analytic-ov-group g-3">
+                            <div class="analytic-data analytic-ov-data">
+                                <div class="title text-primary">الدخل</div>
+                                <div class="amount" id="totalIncomes">0K</div>
+                                <div class="change down"><em class="icon ni ni-arrow-long-down"></em>0%
+                                </div>
+                            </div>
+                            <div class="analytic-data analytic-ov-data">
+                                <div class="title text-danger">المصروفات</div>
+                                <div class="amount" id="totalExpensesAmountVsIncome">0K</div>
+                                <div class="change down"><em class="icon ni ni-arrow-long-up"></em>0%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analytic-ov-ck">
+                            <canvas class="analytics-line-large" id="analyticOvData"></canvas>
+                        </div>
+                        <div class="chart-label-group ms-5">
+                            <div class="chart-label">01 Jan, 2023</div>
+                            <div class="chart-label d-none d-sm-block">15 Jan, 2020</div>
+                            <div class="chart-label">30 Jan, 2023</div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+        <div class="col-md-6 col-xxl-3">
+            <div class="card card-bordered card-full">
+                <div class="card-inner-group">
+                    <div class="card-inner">
+                        <div class="card-title-group">
+                            <div class="card-title">
+                                <h6 class="title">العملاء الجدد</h6>
+                            </div>
+                            <div class="card-tools">
+                                <a class="link">مشاهدة الجميع</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-inner card-inner-md">
+                        <div class="user-card">
+                            {# <div class="user-avatar bg-primary-dim">#}
+                                {# <span>MA</span>#}
+                                {# </div>#}
+                            <div class="user-info">
+                                <span class="lead-text">لا يوجد عملاء جدد</span>
+                            </div>
+                        </div>
+                    </div>
+                    {# <div class="card-inner card-inner-md">#}
+                        {# <div class="user-card">#}
+                            {# <div class="user-avatar bg-primary-dim">#}
+                                {# <span>MA</span>#}
+                                {# </div>#}
+                            {# <div class="user-info">#}
+                                {# <span class="lead-text">Muhammad Ali</span>#}
+                                {# <span class="sub-text">info@softnio.com</span>#}
+                                {# </div>#}
+                            {# </div>#}
+                        {# </div>#}
+                </div>
+            </div><!-- .card -->
+        </div><!-- .col -->
+        <div class="col-md-6 col-xxl-4">
+            <div class="card card-bordered card-full">
+                <div class="card-inner border-bottom">
+                    <div class="card-title-group">
+                        <div class="card-title">
+                            <h6 class="title">آخر الأنشطة</h6>
+                        </div>
+                        <div class="card-tools">
+                            <ul class="card-tools-nav">
+                                <li class="active"><a><span>الجميع</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nk-activity">
+                    <li class="nk-activity-item">
+                        <div class="nk-activity-data">
+                            <div class="label">لا توجد أنشطة جديدة</div>
+                        </div>
+                    </li>
+                    {# <li class="nk-activity-item">#}
+                        {# <div class="nk-activity-media user-avatar bg-warning">HS</div>#}
+                        {# <div class="nk-activity-data">#}
+                            {# <div class="label">حسن قام بحجز جديد</div>#}
+                            {# <span class="time">2 hours ago</span>#}
+                            {# </div>#}
+                        {# </li>#}
+                    {# <li class="nk-activity-item">#}
+                        {# <div class="nk-activity-media user-avatar bg-azure">SM</div>#}
+                        {# <div class="nk-activity-data">#}
+                            {# <div class="label">قام سلطان بإلغاء الحجز</div>#}
+                            {# <span class="time">2 hours ago</span>#}
+                            {# </div>#}
+                        {# </li>#}
+                    {# <li class="nk-activity-item">#}
+                        {# <div class="nk-activity-media user-avatar bg-warning">HS</div>#}
+                        {# <div class="nk-activity-data">#}
+                            {# <div class="label">قام حسان بطلب سعر</div>#}
+                            {# <span class="time">2 hours ago</span>#}
+                            {# </div>#}
+                        {# </li>#}
+                    {# <li class="nk-activity-item">#}
+                        {# <div class="nk-activity-media user-avatar bg-pink">TM</div>#}
+                        {# <div class="nk-activity-data">#}
+                            {# <div class="label">Timothy Moreno placed a Order.</div>#}
+                            {# <span class="time">2 hours ago</span>#}
+                            {# </div>#}
+                        {# </li>#}
+                </ul>
+            </div><!-- .card -->
+        </div><!-- .col -->
+    </div><!-- .row -->
+</div><!-- .nk-block -->
+
+
+
+
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.loading-spinner').show();
+
+
+        $.ajax({
+            url: '{% url "get-statistics-data" hotel.slug %}',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                console.log(data)
+                $('.loading-spinner').hide();
+
+                $('#cardRequestCount').show();
+                $('#cardExpenses').show();
+                $('#cardRooms').show();
+                // Requests
+                $('#totalRequestCount').text(data.requests.total_request);
+                $('#totalRequestCountMonth').text(data.requests.this_month_request);
+                $('#totalRequestCountWeek').text(data.requests.this_week_request);
+                
+                // Rooms
+                $('#totalRooms').text(data.rooms.total_rooms);
+                $('#totalRoomBookedMonth').text(data.rooms.total_booked_room_this_month);
+                $('#totalRoomBookedWeek').text(data.rooms.total_booked_room_this_week);
+                
+                // expenses
+                $('#totalExpensesAmount').text(parseFloat(data.expenses.total_expenses) +' ' +'SAR')
+                $('#totalExpensesMonth').text(data.expenses.this_month_expenses)
+                $('#totalExpensesWeek').text(data.expenses.this_week_expenses)
+
+                // Incomes 
+                $('#totalIncomes').text(data.incomes.total_income_amount)
+                $('#totalExpensesAmountVsIncome').text(parseFloat(data.expenses.total_expenses))
+                // packages
+
+                bookedRoom(data.booked_rooms)
+                
+                data.seasons.forEach(season => {
+                    $('#progress-amount-' + season.id).text(season.progress + '%');
+                    $('#progress-bar-' + season.id).attr({
+                        'data-progress': season.progress,
+                        'style': 'width:' + season.progress + '%'
+                    });
+                });
+
+                // steps of Hotel 
+                // Image & locations
+                var imageAndLocationHasAdded = data.hotel_status.imageAndLocationHasAdded;
+
+                var $imageAndLocation = $('#imageAndLocation');
+
+                var $timelineStatus = $imageAndLocation.find('.timeline-status');
+                
+                var $iconElement = $imageAndLocation.find('em');
+                var $timelineText = $imageAndLocation.find('.timeline-date');
+
+                if(imageAndLocationHasAdded){
+                    $timelineStatus.removeClass('bg-warning').addClass('bg-success is-outline');
+                    
+                    // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
+                    $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
+                }
+
+                // Rooms Has Added ?
+                var roomsHasAdded = data.hotel_status.roomsHasAdded;
+
+                var $rooms = $('#rooms');
+
+                var $timelineStatus = $rooms.find('.timeline-status');
+                
+                var $iconElement = $rooms.find('em');
+                var $timelineText = $rooms.find('.timeline-date');
+
+                if(roomsHasAdded){
+                    $timelineStatus.removeClass('bg-warning').addClass('bg-success is-outline');
+                    
+                    // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
+                    $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
+                }
+
+                // Is Activated
+                var isActivated = data.hotel_status.isActivated;
+
+                var $hotelStatus = $('#hotelStatus');
+
+                var $timelineStatus = $hotelStatus.find('.timeline-status');
+
+                var $iconElement = $hotelStatus.find('em');
+                var $timelineText = $hotelStatus.find('.timeline-date');
+
+                if(isActivated){
+                    $timelineStatus.removeClass('bg-warning').addClass('bg-success is-outline');
+                    
+                    // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
+                    $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
+                }
+                
+                // Change Hotel status
+                // ajax call to that endPoint 
+            },
+            error: function () {
+                $('.loading-spinner').hide();
+                console.error('Error fetching statistics data.');
+            }
+           
+           
+            // const chartData = data.chart_data;
+                // const ctx = document.getElementById('totalBooking').getContext('2d');
+                // new Chart(ctx, {
+                //     type: 'bar',
+                //     data: {
+                //         labels: chartData.labels,
+                //         datasets: [{
+                //             label: 'Bookings',
+                //             data: chartData.data,
+                //             backgroundColor: ['#36a2eb', '#ff6384'],
+                //         }],
+                //     },
+                //     options: {
+                //         // Customize chart options as needed
+                //     },
+                // });
+        });
+    
+    
+        
+    });
+    function activateButton() {
+        // button Clicked
+        // send http GET -> /dashboard/hotel/<slug:hotel>/activate
+        // if success -> show sweetAlert other.
+        // error not activated -> show error 
+        // 
+    }
+    function bookedRoom(booked_rooms) {
+            
+
+        var data = {
+            labels: booked_rooms.map(d => d.room_type),
+            datasets: [{
+                data: booked_rooms.map(d => d.booked_time),
+                backgroundColor: ['#9cabff', '#1ee0ac', '#f9db7b', 'tomato']
+            }]
+        };
+        var ctx = document.getElementById('BookingData').getContext('2d');
+        var doughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+        
+    
+    }
+    
+</script>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% load static %}
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static 'images/logo/ElafInn_icon 1.png' %}">
+    <!-- Page Title  -->
+    <title>ُايلاف ان - لوحة التحكم</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.rtl.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}">
+    <!-- Premade Skin style -->
+    <link rel="stylesheet" href="{% static 'assets/css/skins/theme-egyptian.css' %}">
+
+</head>
+<body class="bg-white" onload="printPromot()" dir="rtl">
+    <div class="nk-block">
+        <div class="invoice invoice-print">
+            <div class="invoice-wrap">
+                <div class="invoice-brand text-center">
+                    <img src="{% static 'images/logo/ElafInn_logo 4.png' %}" srcset="./images/logo-dark2x.png 2x" alt="Image_logo_of_Elafin">
+                </div>
+                <div class="invoice-head">
+                    <div class="invoice-contact">
+                        <span class="overline-title">فاتورة الى </span>
+                        <div class="invoice-contact-info">
+                            <h4 class="title">{{invoice.customer.first_name}} {{invoice.customer.last_name}}</h4>
+                            <ul class="list-plain">
+                                <li><em class="icon ni ni-map-pin-fill"></em><span>{{invoice.customer.address}}</span></li>
+                                <li><em class="icon ni ni-call-fill"></em><span>{{invoice.customer.phone}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="invoice-desc">
+                        <h3 class="title">فاتورة</h3>
+                        <ul class="list-plain">
+                            <li class="invoice-id"><span>رقم الفاتورة</span>:<span>{{invoice.invoice_number}}</span></li>
+                            <li class="invoice-date"><span>التاريخ</span>:<span>{{invoice.issue_date|date:""}}</span></li>
+                        </ul>
+                    </div>
+                </div><!-- .invoice-head -->
+                <div class="invoice-bills">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="w-150px">Item Code</th>
+                                    <th class="w-60">البيان</th>
+                                    <th>السعر</th>
+                                    <th>الكمية</th>
+                                    <th>المبلغ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in invoice.items.all %}
+                                <tr>
+                                    <td>#{{item.id}}</td>
+                                    <td>{{item.description}}</td>
+                                    <td>{{ item.unit_price }}</td>
+                                    <td>{{item.quantity }}</td>
+                                    <td class="lineTotal">{{item.line_total}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">Subtotal</td>
+                                    <td id="subTotal">0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">Processing fee</td>
+                                    <td id="processingFee">0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">الضريبة</td>
+                                    <td id="vatAmount">{{ hotel.vat }} %</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td colspan="2">إجمالي المبلغ</td>
+                                    <td id="totalDueAmount">0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="nk-notes ff-italic fs-12px text-soft"> Invoice was created on a computer and is valid without the signature and seal. </div>
+                    </div>
+                </div><!-- .invoice-bills -->
+            </div><!-- .invoice-wrap -->
+        </div><!-- .invoice -->
+    </div><!-- .nk-block -->
+    
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+    $(document).ready( function(){
+      var vatAmount = parseFloat($('#vatAmount').text())
+    //   const processingFee = $('#processingFee')
+
+      var subTotal = 0;
+      var totalPrice = 0;
+
+      $('.lineTotal').each(function (){
+        subTotal += parseFloat($(this).text());
+      })
+      
+      $('#subTotal').text('SAR' + ' ' + parseFloat(subTotal))
+      var totalPriceWithVat = subTotal * parseFloat((vatAmount / 100) + 1)
+
+
+      $('#totalDueAmount').text(parseFloat(totalPriceWithVat).toFixed(2) + ' ' + 'SAR')
+    //   $('#totalPrice').text(totalPriceWithVat)
+      
+    })
+  </script>
+    <script>
+        function printPromot() {
+            window.print();
+        }
+    </script>
+</body>
+

@@ -1,0 +1,204 @@
+{% load static %}
+
+<!-- sidebar @s -->
+<div class="nk-sidebar nk-sidebar-fixed is-dark " data-content="sidebarMenu">
+    <div class="nk-sidebar-element nk-sidebar-head">
+        <div class="nk-menu-trigger">
+            <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em
+                    class="icon ni ni-arrow-left"></em></a>
+            <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em
+                    class="icon ni ni-menu"></em></a>
+        </div>
+        <div class="nk-sidebar-brand">
+            <a href="{{ hotel.get_absolute_url }}" class="logo-link nk-sidebar-logo">
+{#                <img class="logo-light logo-img"#}
+{#                     src=""#}
+{#                     srcset=""#}
+{#                     alt="logo">#}
+{#                <img class="logo-dark logo-img"#}
+{#                     src=""#}
+{#                     srcset=""#}
+{#                     alt="logo-dark">#}
+            </a>
+        </div>
+    </div><!-- .nk-sidebar-element -->
+    <div class="nk-sidebar-element nk-sidebar-body">
+        <div class="nk-sidebar-content">
+            <div class="nk-sidebar-menu" data-simplebar>
+                <ul class="nk-menu">
+                    <li class="nk-menu-item">
+                        <a href="{% url 'my-hotel' %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-building-fill"></em></span>
+                            <span class="nk-menu-text">منشآتي</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-heading">
+                        <h6 class="overline-title text-primary-alt">معلومات المنشأة</h6>
+                    </li>
+                    <li class="nk-menu-item">
+                        <a href="{{ hotel.get_absolute_url }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-bar-chart"></em></span>
+                            <span class="nk-menu-text">لوحة المعلومات -<strong> {{ hotel.hotel_name }} </strong></span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'hotel_information'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-info-fill"></em></span>
+                            <span class="nk-menu-text">بيانات المنشأة</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'hotel_current_location'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-map-pin-fill"></em></span>
+                            <span class="nk-menu-text">الموقع الجغرافي</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'hotel_gallery'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-img-fill"></em></span>
+                            <span class="nk-menu-text">معرض الصور</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-heading">
+                        <h6 class="overline-title text-primary-alt">العمليات والمتابعة</h6>
+                    </li>
+{#                      <li class="nk-menu-item">#}
+{#                        <a href="{% url 'annual_rent' hotel.slug %}" class="nk-menu-link">#}
+{#                            <span class="nk-menu-icon"><em class="icon  ni ni-tranx-fill"></em></span>#}
+{#                            <span class="nk-menu-text">عرض غرف للإيجار السنوي</span>#}
+{#                        </a>#}
+{#                    </li><!-- .nk-menu-item -->#}
+
+
+
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-chat-fill"></em></span>
+                            <span class="nk-menu-text">الطلبات</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'request-list' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">قائمة الطلبات</span></a>
+                            </li>
+                        </ul>
+                    </li><!-- .nk-menu-item -->
+                    <!-- Bookings -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span>
+                            <span class="nk-menu-text">الحجوزات</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'booking-list' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">قائمة الحجوزات</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{% url 'booking-add' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">إضافة حجز</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="#" class="nk-menu-link"><span class="nk-menu-text">تعديل حجز</span></a>
+                            </li>
+                        </ul>
+                    </li><!-- .nk-menu-item -->
+                    <!-- Rooms -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-text">الغرف</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'room-list' hotel.slug %}" class="nk-menu-link"><span
+                                        class="nk-menu-text">قائمة الغرف</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{% url 'room-type' hotel.slug %}" class="nk-menu-link"><span
+                                        class="nk-menu-text">أنواع الغرف</span></a>
+                            </li>
+                        </ul>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-file-docs"></em></span>
+                            <span class="nk-menu-text">الفواتير</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'invoice-list' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">قائمة الفواتير</span></a>
+                            </li>
+
+                        </ul><!-- .nk-menu-sub -->
+                    </li>
+                    <!-- Reports -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-reports"></em></span>
+                            <span class="nk-menu-text">التقارير</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'report-stocks' hotel.slug%}" class="nk-menu-link"><span class="nk-menu-text">المخزون </span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{% url 'report-expenses' hotel.slug %}" class="nk-menu-link"><span
+                                        class="nk-menu-text">المنصرفات</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nk-menu-item">
+                        <a href="{% url 'season-price-list' hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-sign-dollar"></em></span>
+                            <span class="nk-menu-text">الأسعار</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+
+                    <!-- Employee -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'employee-list'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-layers-fill"></em></span>
+                            <span class="nk-menu-text">الموظفين</span>
+                        </a>
+                    </li>
+
+                    <!-- Expense Management -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'expense-list'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
+                            <span class="nk-menu-text">إدارة المنصرفات</span>
+                        </a>
+                    </li>
+                    <li class="nk-menu-item">
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'customer-list' hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
+                            <span class="nk-menu-text">العملاء</span>
+                        </a>
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span>
+                            <span class="nk-menu-text">المدفوعات</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'payment-methods' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">طرق الدفع</span></a>
+                            </li>
+                            
+                        </ul>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="html/hotel/support.html" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-chat-circle-fill"></em></span>
+                            <span class="nk-menu-text">الدعم</span>
+                        </a>
+                    </li>
+                    <!-- .nk-menu-item -->
+                </ul><!-- .nk-menu -->
+            </div><!-- .nk-sidebar-menu -->
+        </div><!-- .nk-sidebar-content -->
+    </div><!-- .nk-sidebar-element -->
+</div>
+<!-- sidebar @e -->

@@ -1,0 +1,768 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block content %}
+
+    <!-- content @s -->
+    <div class="nk-content ">
+        <div class="container-fluid">
+            <div class="nk-content-inner">
+                <div class="nk-content-body">
+                    <div class="nk-block-head nk-block-head-sm">
+                        <div class="nk-block-between">
+                            <div class="nk-block-head-content">
+                                <h3 class="nk-block-title page-title">قائمة العملاء</h3>
+                                <div class="nk-block-des text-soft">
+                                    <p>لديك 0 عميل.</p>
+                                </div>
+                            </div><!-- .nk-block-head-content -->
+                            <div class="nk-block-head-content">
+                                <div class="toggle-wrap nk-block-tools-toggle">
+                                    <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                       data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                    <div class="toggle-expand-content" data-content="pageMenu">
+                                        <ul class="nk-block-tools g-3">
+{#                                            <li><a href="#" class="btn btn-white btn-outline-light"><em#}
+{#                                                    class="icon ni ni-download-cloud"></em><span>Export</span></a></li>#}
+                                            <li class="nk-block-tools-opt">
+                                                <div class="drodown">
+                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-primary"
+                                                       data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <ul class="link-list-opt no-bdr">
+                                                            <li><a data-bs-toggle="modal" href="#add-customer"><span>إضافة عملاء</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- .toggle-wrap -->
+                            </div><!-- .nk-block-head-content -->
+                        </div><!-- .nk-block-between -->
+                    </div><!-- .nk-block-head -->
+                    <div class="nk-block">
+                        <div class="card card-bordered card-stretch">
+                            <div class="card-inner-group">
+
+                                <div class="card-inner p-0">
+                                    <div class="nk-tb-list nk-tb-ulist">
+                                        <div class="nk-tb-item nk-tb-head">
+                                            <div class="nk-tb-col nk-tb-col-check">
+                                                <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                    <input type="checkbox" class="custom-control-input" id="uid">
+                                                    <label class="custom-control-label" for="uid"></label>
+                                                </div>
+                                            </div>
+                                            <div class="nk-tb-col"><span class="sub-text">اسم مدير المجموعة</span></div>
+                                            <div class="nk-tb-col tb-col-mb"><span class="sub-text">نوع الحجز</span>
+                                            </div>
+                                            <div class="nk-tb-col tb-col-md"><span class="sub-text">رقم الجوال</span></div>
+                                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">تم التوثيق</span>
+                                            </div>
+                                            <div class="nk-tb-col tb-col-lg"><span
+                                                    class="sub-text">تاريخ الحجز</span></div>
+                                            <div class="nk-tb-col tb-col-mb"><span class="sub-text">عدد الضيوف</span></div>
+                                            <div class="nk-tb-col nk-tb-col-tools text-end">
+                                            </div>
+                                        </div><!-- .nk-tb-item -->
+                                        <div class="nk-tb-item">
+                                            <div class="nk-tb-col nk-tb-col-check">
+                                                <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                    <input type="checkbox" class="custom-control-input" id="uid1">
+                                                    <label class="custom-control-label" for="uid1"></label>
+                                                </div>
+                                            </div>
+                                            <div class="nk-tb-col">
+                                                <a href="#">
+
+                                                        <div class="user-info">
+                                                            <span class="tb-lead">لا يوجد عملاء <span
+                                                                    class="dot dot-success d-md-none ms-1"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div><!-- .nk-tb-item -->
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid2">#}
+{#                                                    <label class="custom-control-label" for="uid2"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <div class="user-card">#}
+{#                                                    <div class="user-avatar">#}
+{#                                                        <img src="./images/avatar/a-sm.jpg" alt="">#}
+{#                                                    </div>#}
+{#                                                    <div class="user-info">#}
+{#                                                        <span class="tb-lead">Ashley Lawson <span#}
+{#                                                                class="dot dot-warning d-md-none ms-1"></span></span>#}
+{#                                                        <span>ashley@softnio.com</span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Strater </span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+124 394-1787</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>07 Feb 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-primary">Silver</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid3">#}
+{#                                                    <label class="custom-control-label" for="uid3"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <a href="#">#}
+{#                                                    <div class="user-card">#}
+{#                                                        <div class="user-avatar bg-dark">#}
+{#                                                            <span>MM</span>#}
+{#                                                        </div>#}
+{#                                                        <div class="user-info">#}
+{#                                                            <span class="tb-lead">Micheal Murphy <span#}
+{#                                                                    class="dot dot-success d-md-none ms-1"></span></span>#}
+{#                                                            <span>info@niosoft.com</span>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>All Suit</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+811 569-6523</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>10 Jan 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-orange">Platinum</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid4">#}
+{#                                                    <label class="custom-control-label" for="uid4"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <div class="user-card">#}
+{#                                                    <div class="user-avatar">#}
+{#                                                        <img src="./images/avatar/b-sm.jpg" alt="">#}
+{#                                                    </div>#}
+{#                                                    <div class="user-info">#}
+{#                                                        <span class="tb-lead">Eliana Stout <span#}
+{#                                                                class="dot dot-warning d-md-none ms-1"></span></span>#}
+{#                                                        <span>Eliana@softnio.com</span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Vacation</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+124 394-1787</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>07 Feb 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-warning">Gold</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid5">#}
+{#                                                    <label class="custom-control-label" for="uid5"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <a href="#">#}
+{#                                                    <div class="user-card">#}
+{#                                                        <div class="user-avatar bg-warning">#}
+{#                                                            <span>LH</span>#}
+{#                                                        </div>#}
+{#                                                        <div class="user-info">#}
+{#                                                            <span class="tb-lead">Luukas Haapala<span#}
+{#                                                                    class="dot dot-success d-md-none ms-1"></span></span>#}
+{#                                                            <span>Luukas@niosoft.com</span>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Honeymoon</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+811 569-6523</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>02 May 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-grey">Basic</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid6">#}
+{#                                                    <label class="custom-control-label" for="uid6"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <div class="user-card">#}
+{#                                                    <div class="user-avatar">#}
+{#                                                        <img src="./images/avatar/c-sm.jpg" alt="">#}
+{#                                                    </div>#}
+{#                                                    <div class="user-info">#}
+{#                                                        <span class="tb-lead">Azul Baldwin<span#}
+{#                                                                class="dot dot-warning d-md-none ms-1"></span></span>#}
+{#                                                        <span>Azul@softnio.com</span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Vacation</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+124 156-8756</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>07 Jan 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-warning">Gold</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid7">#}
+{#                                                    <label class="custom-control-label" for="uid7"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <a href="#">#}
+{#                                                    <div class="user-card">#}
+{#                                                        <div class="user-avatar bg-primary">#}
+{#                                                            <span>DL</span>#}
+{#                                                        </div>#}
+{#                                                        <div class="user-info">#}
+{#                                                            <span class="tb-lead">Dasia Lovell<span#}
+{#                                                                    class="dot dot-success d-md-none ms-1"></span></span>#}
+{#                                                            <span>dasia@softnio.com</span>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Continental</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+811 963-4759</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>10 Feb 2020</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-dark">Dimond</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid8">#}
+{#                                                    <label class="custom-control-label" for="uid8"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <div class="user-card">#}
+{#                                                    <div class="user-avatar">#}
+{#                                                        <img src="./images/avatar/d-sm.jpg" alt="">#}
+{#                                                    </div>#}
+{#                                                    <div class="user-info">#}
+{#                                                        <span class="tb-lead">Novalee Spicer<span#}
+{#                                                                class="dot dot-warning d-md-none ms-1"></span></span>#}
+{#                                                        <span>Novalee@softnio.com</span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Strater </span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+124 394-1787</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>07 Feb 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-primary">Silver</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid9">#}
+{#                                                    <label class="custom-control-label" for="uid9"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <a href="#">#}
+{#                                                    <div class="user-card">#}
+{#                                                        <div class="user-avatar bg-dark">#}
+{#                                                            <span>Cl</span>#}
+{#                                                        </div>#}
+{#                                                        <div class="user-info">#}
+{#                                                            <span class="tb-lead">Cielo Luna<span#}
+{#                                                                    class="dot dot-success d-md-none ms-1"></span></span>#}
+{#                                                            <span>cielo@niosoft.com</span>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>All Suit</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+811 569-6523</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>10 Jan 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-orange">Platinum</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+{#                                        <div class="nk-tb-item">#}
+{#                                            <div class="nk-tb-col nk-tb-col-check">#}
+{#                                                <div class="custom-control custom-control-sm custom-checkbox notext">#}
+{#                                                    <input type="checkbox" class="custom-control-input" id="uid10">#}
+{#                                                    <label class="custom-control-label" for="uid10"></label>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col">#}
+{#                                                <a href="#">#}
+{#                                                    <div class="user-card">#}
+{#                                                        <div class="user-avatar bg-danger">#}
+{#                                                            <span>MY</span>#}
+{#                                                        </div>#}
+{#                                                        <div class="user-info">#}
+{#                                                            <span class="tb-lead">Makiyah Yeager<span#}
+{#                                                                    class="dot dot-success d-md-none ms-1"></span></span>#}
+{#                                                            <span>makiyah@niosoft.com</span>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </a>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span>Honeymoon</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-md">#}
+{#                                                <span>+811 569-6523</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <ul class="list-status">#}
+{#                                                    <li><em class="icon text-success ni ni-check-circle"></em> <span>Email</span>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-lg">#}
+{#                                                <span>02 May 2021</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col tb-col-mb">#}
+{#                                                <span class="tb-status text-grey">Basic</span>#}
+{#                                            </div>#}
+{#                                            <div class="nk-tb-col nk-tb-col-tools">#}
+{#                                                <ul class="nk-tb-actions gx-1">#}
+{#                                                    <li class="nk-tb-action-hidden">#}
+{#                                                        <a href="#" class="btn btn-trigger btn-icon"#}
+{#                                                           data-bs-toggle="tooltip" data-bs-placement="top"#}
+{#                                                           title="Send Email">#}
+{#                                                            <em class="icon ni ni-mail-fill"></em>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <div class="drodown">#}
+{#                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"#}
+{#                                                               data-bs-toggle="dropdown"><em#}
+{#                                                                    class="icon ni ni-more-h"></em></a>#}
+{#                                                            <div class="dropdown-menu dropdown-menu-end">#}
+{#                                                                <ul class="link-list-opt no-bdr">#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-eye"></em><span>View Details</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-activity-round"></em><span>Activities</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li class="divider"></li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-edit-fill"></em><span>Edit</span></a>#}
+{#                                                                    </li>#}
+{#                                                                    <li><a href="#"><em#}
+{#                                                                            class="icon ni ni-trash"></em><span>Delete</span></a>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                        </div><!-- .nk-tb-item -->#}
+                                    </div><!-- .nk-tb-list -->
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-inner-group -->
+                        </div><!-- .card -->
+                    </div><!-- .nk-block -->
+                </div>
+            </div>
+        </div>
+    <!-- content @e -->
+
+{% endblock %}

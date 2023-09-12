@@ -1,0 +1,682 @@
+{% extends 'main/base.html' %} {% load static %} {% block content %}
+<style>
+  .filter-section {
+    border-top-right-radius: var(--bs-card-inner-border-radius);
+    border-top-left-radius: var(--bs-card-inner-border-radius);
+    border-color: rgba(0, 0, 0, 0.125) !important;
+    background: rgba(49, 53, 65, 0.03) !important;
+    padding: 2%;
+    border: 1px solid grey;
+    height: 100vh;
+  }
+
+  .card-inner {
+    background: #fff !important;
+    padding: 2%;
+  }
+
+  .results {
+    border-color: white;
+  }
+
+  .search-filter p {
+    font-weight: bold;
+  }
+
+  .search-filter p>span {
+    font-weight: normal;
+  }
+
+
+
+  p {
+    font-size: 10pt;
+  }
+
+  .result-price-box {
+    position: relative;
+    display: grid;
+    padding-top: 5%;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 0 1px 0 rgba(64, 67, 77, 0.37);
+    grid-template-rows: 10%;
+    transition: all 0.3s ease-in-out;
+    align-items: center;
+    text-align: center !important;
+  }
+
+  .nk-msg-tags li>span .icon {
+    color: rgba(189, 179, 161, 0.92);
+    margin-left: 0.25rem;
+  }
+
+  .rating .icon {
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+
+  .product-rating-filter .icon {
+    font-size: 1rem;
+    margin-right: 8px;
+  }
+
+  .nk-msg-tags li {
+    /* padding: 0 0.75rem; */
+    color: #89929d;
+    margin-top: 8px;
+  }
+
+  .custom-control-label {
+    font-size: 13px;
+  }
+
+  .custom-control-input {
+    height: 0.25px;
+    width: 0.25px;
+  }
+
+  .filter-section-star {
+    border-bottom: 1px solid #dbdfea;
+    padding-bottom: 10px;
+  }
+
+  .map-show-btn {
+    background: none;
+    border: none;
+    font-size: 14pt;
+  }
+
+  .hotel-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-template-rows: auto;
+    grid-column-gap: 2px;
+  }
+
+  .hotel-gallery-img {
+    max-height: 350px;
+    padding: 2px;
+  }
+
+  .color-lahmi {
+    color: #020f59;
+    font-size: 12pt;
+  }
+</style>
+<div class="row">
+  <div class="col">
+    <nav>
+      <ul class="breadcrumb justify-content-center text-center">
+        <li class="breadcrumb-item"><a href="#">مكة المكرمة</a></li>
+        <li class="breadcrumb-item active">فندق ابيات النسيم</li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div class="row text-center">
+  <div class="row text-center justify-content-center p-2">
+    <div class="col-lg-5">
+      <div class="row justify-content-center">
+        <div class="col-3 ms-5">
+          <div class="product-thumb">
+            <a href="{{ hotel.get_hotel_page}}">
+              <img class="card-img-top mt-1" style="max-width: 100px !important"
+                src="" alt="" />
+            </a>
+            <ul class="product-actions">
+              <li>
+                <a href="#"><em class="icon ni ni-cart"></em></a>
+              </li>
+              <li>
+                <a href="#"><em class="icon ni ni-heart"></em></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col" style="text-align: right">
+          <div class="product-rating">
+            <ul class="rating" style="font-size: x-small">
+              <li><em class="icon ni ni-star-fill"></em></li>
+              <li><em class="icon ni ni-star-fill"></em></li>
+              <li><em class="icon ni ni-star"></em></li>
+              <li><em class="icon ni ni-star"></em></li>
+              <li><em class="icon ni ni-star"></em></li>
+            </ul>
+          </div>
+          <h5 class="product-title" style="text-align: right; font-weight: normal">
+            <a href="{{hotel.get_hotel_page}}"> {{hotel.hotel_name}}</a>
+            <p class="mt-1 text-gray" style="font-weight: normal; font-size: 10pt">
+              شارع اجياد، مكة المكرمة
+            </p>
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="col mt-4 ms-5" style="text-align: right !important">
+      <em class="icon ni ni-map-pin" style="font-size: 20pt"></em>
+      <button class="map-show-btn">اعرض الخريطة</button>
+    </div>
+    <div class="col mt-2">
+      <div class="h2 m-0" style="color: #020f59">
+        <small class="text-muted del fs-13px">169</small>
+        120
+        <span style="font-size: 11px; font-weight: lighter">
+          SAR، لليلة الواحدة
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row py5">
+  <div class="col">
+   
+    <div id="carouselExampleControls" class="carousel slide d-flex" data-bs-ride="carousel">
+      <div class="carousel-inner mx-auto" style="height: 80vh; overflow: hidden;width: 80vw;">
+        <div class="carousel-item active">
+          <img class="w-100" 
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-9.jpg" />
+
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-3.jpg" />
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-7.jpg" />
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-5.jpg" />
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-6.jpg" />
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg" />
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-11.jpg" />
+        </div>
+        <div class="carousel-item">
+          <img  class="w-100"
+            src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg" />
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: brightness(0%);" ></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true" style="filter: brightness(0%);"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row text-center">
+  <div class="col search-filter">
+    <div class="row py-4 ">
+      <div class="col-md-3 col-6">
+        <p>الوجهة: <span>{% if main_search_params.city == 'Makkah' %}مكة المكرمة{%elif main_search_params.city ==
+            'Madinah'%}المدينة المنورة{%else%}غير محددة{%endif%}</span></p>
+      </div>
+      <div class="col-md-3 col-6">
+        <p>
+          تاريخ الوصول: <span> {{ main_search_params.start_date}}م</span> إلى تاريخ
+          <span> {{ main_search_params.end_date}}م</span>
+        </p>
+      </div>
+      <div class="col-md-3 col-6 mt-4 mt-md-0">
+        <p>عدد الأشخاص: <span> {% if main_search_params.guests %}{{ main_search_params.guests}}{%else%}غير
+            محدد{%endif%}</span></p>
+      </div>
+      <div class="col-md-3 col-6  mt-4 mt-md-0">
+        <a href="" class="btn btn-outline-secondary">تعديل البحث</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Room Component -->
+
+{% include 'main/components/room_component.html' with hotel=hotel %}
+
+<!-- End Room -->
+{% if user.is_authenticated %}
+<!-- User is authenticated, show content for authenticated users -->
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="row mb-3">
+          <div class="col ">
+            <h5 class="">بيانات الحجز</h5>
+            <br>
+
+            <div class="row g-4">
+              
+              <div class="row mt-5 justify-content-center" style="height: 20vh">
+                <div class="col text-center">
+                  <div class="form-group">
+
+
+                    <a data-bs-toggle="modal" href="#booking-confirm-modal">
+                      <button type="button" class="btn btn-xl btn-primary">
+                        متابعة
+                      </button>
+                    </a>
+                    </button>
+                    <p class="pt-1" style="font-size: small">
+                      بإكمال هذه العملية ، انت تقر بأنك قمت بمراجعة وقبول الشروط المذكورة في
+                      الرابط
+                      <a href="" class="color-lahmi sq-md" style="font-size: small">الشروط
+                        والأحكام</a>.
+
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-md-6 ">
+            <div class="" style="border-left:1px solid black ;">
+            <h5 class="p-0 m-0">تفاصيل الحجز</h5>
+            <br>
+            <div class="product-rating" style="font-size: 5px">
+              <ul class="rating">
+                <li><em class="icon ni ni-star-fill"></em></li>
+                <li><em class="icon ni ni-star-fill"></em></li>
+                <li><em class="icon ni ni-star"></em></li>
+                <li><em class="icon ni ni-star"></em></li>
+                <li><em class="icon ni ni-star"></em></li>
+              </ul>
+            </div>
+            
+            <p class="product-title m-0" style="text-align: right; font-size: 12pt">
+              <a href="html/product-details.html">
+                {{ hotel.hotel_name}}
+              </a>
+            <p class="text-gray" style="font-weight: normal; font-size: 9pt">
+              {{hotel.address}}
+            </p>
+            <div class="row">
+              <div class="col">
+                <div class="d-flex flex-column mb-3">
+                  <div class=" "><em class="icon ni ni-calendar"></em></div>
+                  <div class=" ">09-03-2023</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="d-flex flex-column mb-3">
+                  <div class=" "><em class="icon ni ni-moon"></em></div>
+                  <div class=" ">1 ليلة</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="d-flex flex-column mb-3">
+                  <div class=" "><em class="icon ni ni-calendar"></em></div>
+                  <div class=" ">10-03-2023</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              {% for room in selected_rooms %}
+              <div class="col">
+                <br>
+
+                <p class="fw-bold m-0">{{ room.roomType}}</p>
+                <p class="m-0 text-soft">ROOM ONLY</p>
+                <p class="text-danger">
+                  غير قابل للاسترجاع
+                  <a placement="auto" class="btn-pop-hover">
+                    <i class="fal fa-info-circle"></i>
+                  </a>
+                </p>
+                <span class="room-price tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
+                </span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+          <div class="col-md-6">
+            <h5 class="p-0 m-0">ملخص السعر</h5>
+            <br>
+            <table style="font-size: 13px; width: 100%">
+              <tr>
+                <td>ضريبة القيمة المضافة</td>
+                <td class="text-sm-end">SAR <span id="vatAmount">{{hotel.vat}}</span></td>
+              </tr>
+              <tr>
+                <td>الإجمالي شامل ضريبة القيمة المضافة</td>
+                <td class="text-sm-end">SAR <span id="totalWithVat">0</span></td>
+              </tr>
+              <tr>
+                <td>كود الخصم</td>
+                <td class="text-sm-end">0</td>
+              </tr>
+            </table>
+
+            <hr>
+            <div class="row">
+              <div class="col">
+                <h6 class="fw-bold">السعر الإجمالي</h6>
+              </div>
+              <div class="col">
+                <h5 class="text-teal text-lg-end">SAR <span id="totalPrice">0</span></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal for booking confirm -->
+<div class="modal fade" tabindex="-1" role="dialog" id="booking-confirm-modal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+      <div class="modal-body modal-body-md">
+        <h5 class="modal-title">تفاصيل الحجز</h5>
+        <form action="{% url 'main:booking-add' hotel.slug%}" method="post" class="mt-2" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row g-gs">
+
+            <!-- First Name -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="first-name">{{customer_form.first_name.label_tag}}</label>
+                {{ customer_form.first_name }}
+              </div>
+            </div>
+
+            <!-- last Name -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="last-name">{{ customer_form.last_name.label_tag }}</label>
+                {{ customer_form.last_name }}
+              </div>
+            </div>
+
+
+            <!-- phone -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="phone-no">{{ customer_form.phone.label_tag }}</label>
+                {{ customer_form.phone }}
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="email">{{ customer_form.email.label_tag }}</label>
+                {{ customer_form.email}}
+              </div>
+            </div>
+
+            <!-- Address of customer -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="address">{{ customer_form.address.label_tag }}</label>
+                {{ customer_form.address }}
+              </div>
+            </div>
+
+            <!-- package -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">الباقة</label>
+                <div class="form-control-wrap">
+                  
+                  <select name="{{ booking_form.package.name}}" class="form-select" data-placeholder="Select multiple options">
+                    {% for value,label  in booking_form.package.field.choices %}
+                    
+                    <option value="{{value}}" {% if value == request.session.package_id %}selected{% endif %}>{{ label }}</option>
+                    
+
+                      {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- guests number -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="total-person">إجمالي عدد الأشخاص</label>
+                <input type="number" name="{{ booking_form.guests.name}}" class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص"
+                  value="{{ request.session.main_search_params.guests}}" required>
+              </div>
+            </div>
+
+            <!-- start date -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">تاريخ الوصول</label>
+                <div class="form-control-wrap">
+                  <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-calendar"></em>
+                  </div>
+                  <input type="date" name="{{ booking_form.start_date.name}}" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                   value="{{ request.session.main_search_params.start_date}}" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- end date -->
+            
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">تاريخ المغادرة</label>
+                <div class="form-control-wrap">
+                  <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-calendar"></em>
+                  </div>
+                  <input type="date" name="{{ booking_form.end_date.name }}" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                    placeholder="yyyy-mm-dd" required value="{{ request.session.main_search_params.end_date }}">
+                </div>
+              </div>
+            </div>
+
+            <!-- Rooms -->
+            <div class="row">
+              <!-- We have looping over rooms with specifice ids or Type -->
+              {% for room in hotel.rooms %}
+              <div class="col-3">
+                <br>
+
+                <p class="fw-bold m-0">{{ room.roomType}}</p>
+                <p class="m-0 text-soft">ROOM ONLY</p>
+                <p class="text-danger">
+                  غير قابل للاسترجاع
+                  <a placement="auto" class="btn-pop-hover">
+                    <i class="fal fa-info-circle"></i>
+                  </a>
+                </p>
+                <span class="tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
+                </span>
+                <!-- hidden field for POST -->
+                <select name="room" id="{{room.id}}" hidden multiple>
+                  <option value="{{ room.id}}" selected></option>
+                </select>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- </div> -->
+            <!--col-->
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="form-label" for="default-textarea">ملاحظات</label>
+                <div class="form-control-wrap">
+                  <textarea class="form-control no-resize" id="default-textarea"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                <li>
+                  <button type="submit" class="btn btn-primary">إرسال طلب الحجز</button>
+                </li>
+                <li>
+                  <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div><!-- .modal-body -->
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+{% else %}
+
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="row justify-content-center p-3">
+      <div class="col-12">
+        <div class="row mb-3">
+          <div class="col">
+            <div class="header-caption text-center">
+              <h3 class="fw-medium textDark mt-3">الرجاء تسجيل الدخول اولا او انشاء حساب</h3>
+            </div>
+            <br>
+            <form method="post" action="#" next="/">
+              <div class="row g-4">
+
+                <div class="row mt-5 justify-content-center">
+                  <div class="col text-center">
+                    <div class="form-group">
+                      <a href="{% url 'main:login' %}"><button type="button"
+                          class="btn LoginBtn btn-block">تسجيل الدخول</button></a>
+                    </div>
+                  </div>
+                  <div class="col text-center">
+                    <div class="form-group">
+                      <a href="{% url 'main:register'%}"><button type="button"
+                          class="btn SignInBtn btn-block">انشاء حساب جديد</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+{% endif %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="nk-content px-0">
+        <div class="container-fluid">
+          <div class="nk-content-inner">
+            <div class="nk-content-body">
+              <div class="row">
+                <div class="col-12 ">
+                  <h4 style="font-weight: normal">عن الفندق</h4>
+                  <h6 class="mt-4" style="font-weight: normal">عن الفندق</h6>
+                  <p>
+                    الإقامة في فندق الدانة الماسية مكة المكرمة في مكة المكرمة
+                    تضعك على بُعد 5 دقائق بالسيارة من الحرم المكي وبئر زمزم.
+                    الإقامة في هذا الفندق، منشأة تتّسم بتصنيف 4 نجوم، تضعك على
+                    بُعد ٤٫٦ كم من الكعبة و ٧٫٢ كم من مكة مول.
+                  </p>
+
+                  <h6 class="mt-4" style="font-weight: normal">الغرف</h6>
+                  <p>
+                    اشعر وكأنك في منزلك عند الإقامة في واحدة من 611 غرفة ضيافة
+                    مكيفة، والتي تحتوي على ثلاجات وتلفزيون بشاشة مسطحة. تتاح لك
+                    اتصال لاسلكي بالإنترنت مجانًا لتبقى على اتصال دائمًا،
+                    بالإضافة إلى قنوات فضائية من أجل متعتك. تضم الغرف حمامات
+                    خاصة بها تجهيزات دش مع مستلزمات مجانية للعناية الشخصية
+                    وبيديه. تضم وسائل الراحة خزنات ومكاتب، وتتوفر خدمة تدبير
+                    الغرف يوميًا.
+                  </p>
+
+                  <h6 class="mt-4" style="font-weight: normal">
+                    الخدمات الترفيهية
+                  </h6>
+                  <p>
+                    تمتع بوسائل الراحة المتاحة في هذه المنشأة والتي تضم إنترنت
+                    لاسلكي مجاناً وخدمات الاستعلامات والإرشاد وقاعة رقص.
+                  </p>
+
+                  <h6 class="mt-4" style="font-weight: normal">تناول الطعام</h6>
+                  <p>
+                    استمتع بوجبة في مطعم هذا الفندق، أو أقم هنا للاسترخاء
+                    والاستفادة من خدمة الغرف (خلال ساعات محدودة). يتم تقديم فطور
+                    أوروبي يوميًا من 6:30 صباحاً إلى 10:30 صباحاً مقابل رسم
+                    إضافي.
+                  </p>
+
+                  <h6 class="mt-4" style="font-weight: normal">
+                    خدمات الأعمال ووسائل الراحة الأخرى
+                  </h6>
+
+                  <p>
+                    تضم وسائل الرائحة المميزة مركز لرجال الأعمال مفتوح 24 ساعة
+                    وخدمة سريعة لإجراءات تسجيل الوصول وخدمة سريعة لإنهاء إجراءات
+                    المغادرة. يتاح خدمة مواقف السيارات لفترة محدودة داخل موقع
+                    المنشأة.
+                  </p>
+                </div>
+                <div class="col-12 mt-4 p-2" style="height: min-content">
+                  <h4 style="font-weight: normal">سياسات الفندق</h4>
+                  <h6 class="mt-4" style="font-weight: normal">سياسة الدخول</h6>
+                  <p>وقت الدخول من , وقت الخروج حتي</p>
+                  <h6 class="mt-4" style="font-weight: normal">
+                    سياسة الإلغاء
+                  </h6>
+                  <p>
+                    قد تختلف سياسات الإلغاء حسب الموسم أو حسب نوع الفندق أو
+                    الغرفة. يمكنك مراجعة سياسة الفندق أثناء الحجز.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+  $(document).ready( function(){
+    var vatAmount = parseFloat($('#vatAmount').text())
+    var totalPrice = 0;
+    $('.room-price').each(function (){
+      totalPrice += parseInt($(this).text());
+      console.log($(this).text())
+    })
+    var totalPriceWithVat = totalPrice * parseFloat((vatAmount / 100) + 1)
+    console.log(totalPriceWithVat)
+    $('#totalWithVat').text(totalPriceWithVat)
+    $('#totalPrice').text(totalPriceWithVat)
+    
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block back %}
+<a class="back-to" onclick="history.back()">
+    <em class="icon ni ni-arrow-left"></em>
+    <span>عودة</span>
+</a>
+{% endblock %}
+{% block page_title %}إضافة غرفة جديد{% endblock %}
+
+{% block content %}
+
+<div class="nk-block">
+    <div class="row g-gs FullInput">
+        <div class="col-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <form action="" class="gy-3 form-settings" method="post" enctype="multipart/form-data"
+                        autocomplete="off">
+                        {% csrf_token %}
+                        
+                        <div class="row g-3  w-100 FullInput">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label mb-3" for="site-name">نوع الغرفة</label>
+                                    <br>
+                                        <select name="roomType" id="roomType" class="form-control mt-2">
+                                            {% for type in Types %}
+                                            <option value="{{ type.id }}">
+                                                {{ type.get_roomType_display }}</option>
+                                            {% endfor %}
+                                        </select>
+                                </div>
+                            </div>
+                        {% for field in form %}
+                            <div class="col-6">
+                                <div class="form-group w-100">
+                                    <label class="form-label" for="site-name">{{ field.label_tag }}</label>
+                                    <br>
+                                        {{ field }}
+                                </div>
+                            </div>
+                         
+                        {% endfor %}
+                    </div>
+
+                        <input type="hidden" name="hotel" value="{{ hotel.id }}">
+                                <div class=" mt-2">
+                                    <button type="submit" class="btn btn-lg btn-primary">حفظ
+                                    </button>
+                                    <a href="{% url 'room-list' hotel.slug %}" class="btn btn-outline-light ms-3"
+                                        style="padding: 11px 24px; font-size: 15px">
+                                        إلغاء
+                                    </a>
+                                </div>
+                          
+                        
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

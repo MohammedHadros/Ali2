@@ -1,0 +1,449 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        .filter-section {
+            border-top-right-radius: var(--bs-card-inner-border-radius);
+            border-top-left-radius: var(--bs-card-inner-border-radius);
+            border-color: rgba(0, 0, 0, 0.125) !important;
+            background: rgba(49, 53, 65, .03) !important;
+            padding: 2%;
+            border: 1px solid grey;
+            height: 100vh;
+        }
+
+        .card-inner {
+            background: #fff !important;
+            padding: 2%;
+        }
+
+        .results {
+            border-color: white;
+        }
+
+        .search-filter p {
+            font-weight: bold;
+        }
+
+        .search-filter p > span {
+            font-weight: normal;
+        }
+
+        .box-shdow {
+            border: 1px solid #d4d2d2;
+            box-shadow: inset 0 0 10px 0 rgb(155 24 143 / 5%);
+        }
+
+        p {
+            font-size: 10pt;
+        }
+
+        .result-price-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            transition: all .3s ease-in-out;
+            align-items: center;
+            text-align: center !important;
+            height: 100%;
+            padding: 20px 30px 0px 30px;
+            justify-content: space-between;
+        }
+
+        .nk-msg-tags li > span .icon {
+            color: rgba(189, 179, 161, 0.92);
+            margin-left: 0.25rem;
+        }
+
+        .rating .icon {
+            font-size: .9rem;
+            margin-top: 10px;
+        }
+
+        .product-rating-filter .icon {
+            font-size: 1rem;
+            margin-right: 1px;
+        }
+
+        .nk-msg-tags li {
+            /* padding: 0 0.75rem; */
+            color: #89929d;
+            margin-top: 8px;
+        }
+
+        .custom-control-label {
+            font-size: 13px;
+        }
+
+        .custom-control-input {
+            height: 0.25px;
+            width: 0.25px;
+        }
+
+        .filter-section-star {
+            border-bottom: 1px solid #dbdfea;
+            padding-bottom: 10px;
+        }
+
+        .kabba {
+            width: 20px;
+            margin-left: 5px;
+        }
+
+        #slider-round {
+            height: 10px;
+        }
+
+        #slider-round .noUi-connect {
+            background: #f4bd0e;
+        }
+
+        #slider-round .noUi-handle {
+            height: 15px;
+            width: 15px;
+            top: -5px;
+            right: -9px; /* half the width */
+            border-radius: 9px;
+        }
+
+        #slider-hide .noUi-tooltip {
+            display: none;
+        }
+
+        #slider-hide .noUi-active .noUi-tooltip {
+            display: block;
+        }
+    </style>
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/nouislider.css' %}">
+
+    <div class="row text-center box-shdow">
+        <div class="col search-filter" >
+            <div class="row py-4 px-md-7 px-3 ">
+                <div class="col">
+                    <h5>باقات العمرة والزيارة</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center box-shdow">
+        <div class="col search-filter" >
+            <div class="row py-4 px-md-7 px-3">
+                <div class="col-lg-3 col-6">
+                    <p>الوجهة: <span> مكة المكرمة</span></p>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <p>تاريخ الوصول: <span> {{start_date}}م</span> إلى تاريخ <span> {{end_date}}م</span></p>
+                </div>
+                <div class="col-lg-3 col-6 mt-4 mt-lg-0">
+                    <p>عدد الأشخاص: <span> {% if not main_search_params.guests %}غير محدد{%else%}{{main_search_params.guests}}{%endif%}</span></p>
+                </div>
+                <div class="col-lg-3 col-6 mt-4 mt-lg-0">
+                    <a href="" class="btn btn-outline-secondary">تعديل البحث</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nk-content ">
+        <div class="container">
+            <div class="nk-content-inner">
+                <div class="nk-content-body">
+                    <div class="nk-block">
+                        <div class="row">
+                            <div class="col-lg-2 "
+                                 style="border-radius: 10px; height: min-content; margin-top: 4.5% !important;">
+                                
+                                 <!-- SideBar filter  -->
+                                 
+                                 <form method="get" action="{% url 'main:filtered-sidebar'%}">
+                                    <!-- Star Filter -->
+                                 <div class="ms-2 mt-4 filter-section-star">
+                                    
+                                        <p style="font-size: large" class="text-bg-light text-center">التصنيف</p>
+                                        <div class="product-rating product-rating-filter ">
+                                            <ul class="rating">
+                                                    
+                                                    <li><input class="form-check-input" style="cursor: pointer;"
+                                                        type="checkbox" {% if request.GET.category == '5' %}checked{%endif%} name="category" id="" value="5"></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-rating product-rating-filter">
+                                            <ul class="rating">
+                                                <li>
+                                                    <input type="checkbox"
+                                                    class="form-check-input"
+                                                    name="category" 
+                                                    {% if request.GET.category == '4' %}checked{%endif%} id="" 
+                                                    style="cursor: pointer;"
+                                                    value="4">
+                                                </li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-rating product-rating-filter">
+                                            <ul class="rating">
+                                                <input type="checkbox" 
+                                                class="form-check-input"
+                                                name="category" id="" 
+                                                {% if request.GET.category == '3' %}checked{%endif%} 
+                                                style="cursor: pointer;"
+                                                value="3">
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-rating product-rating-filter">
+                                            <ul class="rating">
+                                                <input type="checkbox" 
+                                                class="form-check-input"
+                                                name="category" 
+                                                id="" 
+                                                {% if request.GET.category == '2' %}checked{%endif%} 
+                                                value="2"
+                                                style="cursor: pointer;"
+                                                >
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-rating product-rating-filter">
+                                            <ul class="rating">
+                                                <input type="checkbox" 
+                                                class="form-check-input"
+                                                name="category" {% if request.GET.category == '1' %}checked{%endif%} 
+                                                id="" 
+                                                style="cursor: pointer;"
+                                                value="1">
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-rating product-rating-filter">
+                                            
+                                            <ul class="rating">
+                                                <input type="checkbox" 
+                                                class="form-check-input" 
+                                                name="category" 
+                                                {% if request.GET.category == '0' %}checked{%endif%} 
+                                                style="cursor: pointer;"
+                                                id="" 
+                                                value="0">
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                            </ul>
+                                        </div>
+                                        
+                                    
+                                </div>
+
+                                <!-- Price Filter-->
+                                
+                                <div class="ms-2 mt-3 filter-section-star">
+                                
+                                        <p style="font-size: large" class="text-bg-light text-center">السعر</p>
+                                        <div class="slider-styled w-100 mt-4 mb-2" id="slider-round"></div>
+                                        من:  <span class="example-val" id="slider-margin-value-min"> 100</span> ريال <br>
+                                          إلى: <span class="example-val" id="slider-margin-value-max"> 10000</span> ريال
+                                    
+                                </div>
+
+                                <!-- Payment methods -->
+                                <div class="ms-2 mt-3 filter-section-star">
+                                
+                                    <p style="font-size: large" class="text-bg-light text-center">طريقة الدفع</p>
+                                    {{ hotel_sidebar_filter.form.payment_methods__type}}
+                                    <!-- <select 
+                                        name="payment_methods_name" 
+                                        id="payment_methods_name"
+                                        class="form-select"
+                                        >
+                                        <option value="1" selected>اختر وسيلة الدفع</option>
+                                        {% for choice in request.session.payment_methods_choices%}
+                                        <option value="{{ choice }}" {% if request.GET.payment_methods_name == choice %} selected {% endif %}>{{ choice }}</option>
+                                        {% endfor %}
+                                    </select> -->
+                            </div>
+
+                                <!-- Location Filter -->
+                                
+                                <div class="ms-2 mt-3 filter-section-star">
+                                    
+                                         <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
+                                        <ul class="custom-control-group g-3 align-center flex-wrap">
+                                            <li>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" 
+                                                           name="location__hrm__lte" id="reg-enable" value="1"
+                                                           {% if request.GET.location__hrm__lte == '1' %} checked {%else%} {% endif %}
+                                                           >
+                                                    <label class="custom-control-label" for="reg-enable">أقل من
+                                                        كيلو</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" name="location__hrm__range"
+                                                    value="5"
+                                                    {% if request.GET.location__hrm__range == '5' %} checked {%else%} {% endif %}
+                                                           id="reg-disable">
+                                                    <label class="custom-control-label"
+                                                           for="reg-disable">من 5 إلى 10 كيلو</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="custom-control custom-radio checked">
+                                                    <input type="radio" class="custom-control-input" name="location__hrm__gte"
+                                                           id="reg-request"
+                                                           {% if request.GET.location__hrm__gte == '10' %} checked {%else%} {% endif %}
+                                                           value="10"
+                                                           >
+                                                    <label class="custom-control-label" for="reg-request">
+                                                        10 كيلو فأكثر
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                </div>
+                                <div class="ms-2 mt-3 filter-section-star">
+                                    <button type="submit" class="btn btn-outline-secondary btn-block"id="filter-submit">بحث</button>    
+                                </div>
+                                <input type="hidden" name="city" value="{{ main_search_params.city }}">
+                                <input type="hidden" name="nationality" value="{{ main_search_params.nationality }}">
+                                <input type="hidden" name="guests" value="{{ main_search_params.guests }}">
+                                <input type="hidden" name="datefilter" value="{{ main_search_params.datefilter }}">
+                            </form>
+                            
+                            </div>
+                            
+                            <div class="col-lg-10 ">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between">
+                                        <div class="nk-block-head-content w-75">
+
+                                            {% if hotels.count%}
+                                            <h6 class="text-center"
+                                                style="font-weight: normal; color: #21ad21;">
+                                                <em class="icon ni ni-check-circle"></em>
+                                                تم العثور على ({{hotels.count}}) فندق/فنادق</h6>
+                                            
+                                                <!-- No results -->
+                                                {%else %}
+                                            <h6 class="text-center"
+                                                style="font-weight: normal; color: #d61010;">
+                                                
+                                                لم يتم العثور على فندق 
+                                            </h6>
+                                            {% endif%}
+
+                                        </div><!-- .nk-block-head-content -->
+                                        <div class="nk-block-head-content">
+                                            <div class="toggle-wrap nk-block-tools-toggle d-flex">
+                                                <a href="#" class="btn btn-icon  btn-trigger toggle-expand me-n1"
+                                                   data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                <div class="toggle-expand-content" data-content="pageMenu">
+                                                    <ul class="nk-block-tools g-3">
+                                                        <li>
+                                                            <div class="drodown">
+                                                                <a href="#"
+                                                                   class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                   data-bs-toggle="dropdown">فرز حسب</a>
+                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><span>الاسم</span></a></li>
+                                                                        <li><a href="#"><span>السعر</span></a></li>
+                                                                        <li><a href="#"><span>التقييم</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                                   data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                <div class="toggle-expand-content" data-content="pageMenu">
+                                                    <ul class="nk-block-tools g-3">
+                                                        <li>
+                                                            <div class="drodown">
+                                                                <a href="#"
+                                                                   class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                   data-bs-toggle="dropdown">فرز حسب</a>
+                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><span>الاسم</span></a></li>
+                                                                        <li><a href="#"><span>السعر</span></a></li>
+                                                                        <li><a href="#"><span>التقييم</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                    </div><!-- .nk-block-between -->
+                                </div>
+                                <div class="row g-gs">
+                                    <!-- Hotels LIST  -->
+                                    {% include 'main/components/hotels_list.html' with hotels=hotels%}
+                                    <!-- End Hotel LIST -->
+                                </div>
+                                <!-- paginations -->
+                                {% include 'main/components/paginator.html' with page_obj=hotels %}
+                                
+                            </div>
+                        </div>
+
+                    </div><!-- .nk-block -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'assets/js/nouislider.js' %}"></script>
+    <script>
+        var slider = document.getElementById('slider-round');
+
+        noUiSlider.create(slider, {
+            start: [100, 10000],
+            connect: true,
+            margin: 100,
+            direction: 'rtl',
+            range: {
+                'min': 100,
+                'max': 10000
+            }
+        });
+        var paddingMin = document.getElementById('slider-margin-value-min');
+        var paddingMax = document.getElementById('slider-margin-value-max');
+
+        slider.noUiSlider.on('update', function (values, handle) {
+            if (handle) {
+                paddingMax.innerHTML = values[handle];
+            } else {
+                paddingMin.innerHTML = values[handle];
+            }
+        });
+    </script>
+{% endblock %}
